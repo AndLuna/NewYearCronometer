@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown Timer</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="main.js"></script>
+    <style>
+        /* CSS e o JS no HTML apenas para facilitar a visualização e o estudo do codigo,
+         não é recomendado fazer assim. */
+        @import url('https://fonts.cdnfonts.com/css/digital-numbers');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: all .8s;
+        }
+
+        body {
+            display: grid;
+            place-content: center;
+            height: 100vh;
+            background-color: slategray;
+        }
+
+        .countdown {
+            padding: 18px;
+            border: solid 10px rgb(50, 50, 50);
+            border-radius: 35px;
+
+            font-family: 'Digital Numbers', sans-serif;
+            font-size: 50px;
+            color: rgb(255, 125, 125);
+            text-shadow: 0 0 10px red;
+
+            background-color: rgb(0, 0, 0);
+            box-shadow: 5px 5px 0px 0px rgba(0, 0, 0, 5);
+        }
+
+        .countdown span {
+            text-align: end;
+            position: relative;
+            display: inline-block;
+            min-width: 80px;
+            height: 90px;
+            padding-bottom: 10px;
+        }
+
+        .countdown span::after {
+            content: '88';
+            position: absolute;
+            left: 0;
+            color: rgba(255, 255, 255, 0.1);
+            text-shadow: none;
+        }
+
+        .countdown #dayElement::before {
+            content: 'DAYS';
+        }
+
+        .countdown #hourElement::before {
+            content: 'HOURS';
+        }
+
+        .countdown #minElement::before {
+            content: 'MINS';
+        }
+
+        .countdown #secElement::before {
+            content: 'SECS';
+        }
+
+        .countdown span::before {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translate(-50%, 0);
+            font-family: 'Open Sans', 'Helvetica Neue', sans-serif;
+            font-size: 16px;
+            font-weight: bold;
+            color: darkgray;
+            text-shadow: none;
+        }
+    </style>
+</head>
+
+<body>
+    <p class="countdown">
+        <span id="dayElement">0</span>
+        <span id="hourElement">0</span>:<span id="minElement">0</span>:<span id="secElement">0</span>
+    </p>
+
+
+    <script>
+        const nextYear = (new Date()).getFullYear() + 1
+        //obtém o ano atual usando a biblioteca Date e adiciona 1 ao valor para obter o próximo ano.
+        const nextYearDate = new Date(nextYear, 0, 1)
+        // cria uma nova data para a meia-noite de 1 de janeiro do próximo ano.
+        setInterval(() => {
+             //calcular a quantidade de dias, horas, minutos e segundos restantes até a meia-noite de 1 de janeiro 
+            const todayDate = new Date()
+            const secDiff = Math.floor((nextYearDate.getTime() - todayDate.getTime()) / 1000)
+            // calcula a quantidade de dias restantes. Pegando a diferença em segundos por 3600 (60 * 60) 
+            const days = Math.floor((secDiff / (60 * 60)) / 24)
+            //quantidade de horas restantes
+            const hours = Math.floor(secDiff / (60 * 60)) % 24
+            const minutes = Math.floor(secDiff / 60) % 60
+            const seconds = Math.floor(secDiff) % 60
+
+            dayElement.innerText = days
+            hourElement.innerText = hours
+            minElement.innerText = minutes
+            secElement.innerText = seconds
+        }, 1000)
+    </script>
+</body>
+
+</html>
